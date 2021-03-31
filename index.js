@@ -3,19 +3,39 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
 
+// 
+const app = express()
+const port = process.env.PORT || 5055;
+
+// test
+// console.log(process.env.DB_USER);
+
 // middle wire
 app.use(cors())
 app.use(express.json())
 
-// 
-const app = express()
-const port = process.env.PORT || 3000;
+//mongoDB
+const MongoClient = require('mongodb').MongoClient;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.l7yew.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+// console.log(uri);
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+    const productCollection = client.db("MyEasyMartDB").collection("products");
+    console.log('connected with mongodb database')
+
+    // data POST testing
+    // const newEvent = { "name": "Product One" };
+    // productCollection.insertOne(newEvent)
+    //     .then(result => { console.log(`Successfully inserted item with _id: ${result.insertedId}`) })
+    //     .catch(err => { console.error(`Failed to insert item: ${err}`) })
+});
+
 
 // default
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+    res.send('Hello World!')
 })
 // default
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}`)
 })
