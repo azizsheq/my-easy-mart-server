@@ -28,12 +28,24 @@ client.connect(err => {
     // productCollection.insertOne(newEvent)
     //     .then(result => { console.log(`Successfully inserted item with _id: ${result.insertedId}`) })
     //     .catch(err => { console.error(`Failed to insert item: ${err}`) })
+
+    // adding new product
+    app.post('/addProduct', (req, res) => {
+        const newProduct = req.body;
+        // console.log("New Product:", newProduct);
+        productCollection.insertOne(newProduct)
+        .then(result => { 
+            console.log(`Successfully inserted item with _id: ${result.insertedId}`)
+            res.send(result.insertedId > 0)
+        })
+        .catch(err => { console.error(`Failed to insert item: ${err}`) })
+    })
 });
 
 
 // default
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello, My Easy Mart Server is Running !')
 })
 // default
 app.listen(port, () => {
