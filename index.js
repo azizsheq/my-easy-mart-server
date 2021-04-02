@@ -6,6 +6,7 @@ require('dotenv').config()
 
 // 
 const app = express()
+// process.env.PORT for heroku deploy
 const port = process.env.PORT || 5055;
 
 // test
@@ -104,7 +105,6 @@ client.connect(err => {
                 res.send(products)
             })
     })
-
     //end
 });
 
