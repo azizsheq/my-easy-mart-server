@@ -83,7 +83,7 @@ client.connect(err => {
     })
 
 
-    // adding new items to -> orders
+    // adding user clicked items to -> orders
     app.post('/addToOrders', (req, res) => {
         const newOrder = req.body;
         // console.log("New Product:", newProduct);
@@ -96,7 +96,14 @@ client.connect(err => {
     })
 
 
-    
+    // getting all ordered items from -> orders
+    app.get('/getOrderedProduct', (req, res) => {
+        orderCollection.find()
+            .toArray((err, products) => {
+                res.send(products)
+            })
+    })
+
     //end
 });
 
