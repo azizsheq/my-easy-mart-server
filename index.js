@@ -98,7 +98,8 @@ client.connect(err => {
 
     // getting all ordered items from -> orders
     app.get('/getOrderedProduct', (req, res) => {
-        orderCollection.find()
+        // console.log(req.query.email);
+        orderCollection.find({userEmail: req.query.email})
             .toArray((err, products) => {
                 res.send(products)
             })
